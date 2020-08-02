@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>接口说明</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/resume.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #E9ECEF
+        }
+    </style>
+
+</head>
+
+<body id="page-top">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="/">
+        <span class="d-block d-lg-none">Mac Xin</span>
+        <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/static/img/tig.jpg" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/aip/">查看当前可用代理池</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/iip/">查看当前代理池</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/spiders/">向代理池添加代理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/sip/">筛选可用代理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/explain/">接口说明</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="jumbotron">
+            <h1 class="display-4">Hello, stranger!</h1>
+            <p class="lead">首先声明一下，本网站仅供学习参考！！！</p>
+            <hr class="my-4">
+            <p>这是一个由本人 MacXin 独立完成的一个爬虫+flask+vue的代理池网站项目</p>
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                显示接口
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                         data-parent="#accordionExample">
+                        <div class="card-body">
+                            显示接口基本上都在左侧的导航栏里了。。。就简单说一下吧：首先是说一下代理池的构造，
+                            我使用的是redis的集合类型存储的这些代理ip，用了2个字段，分别是"可用ip"以及"待清洗的ip",
+                            可用ip意味着是已经清洗过的ip，可用直接拿来用的，"查看当前代理池"查看的便是待清洗的ip，
+                            待清洗的ip可在筛选代理页面进行清洗，池中的ip有限，所以说第三行的"向代理池添加代理"是个简单的爬虫程序，
+                            通过这个爬虫向池中添加待清洗的代理数量，可自由控制添加的页数。
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                    data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                隐式接口
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            讲真。。。这些显示接口有个锤子用？？？我写这些显示接口基本上只是不知道该给这个网站加些什么功能或者API，所以说，基本上真正有一点用的，
+                            就是以下要介绍的隐式接口了。<br>
+                            <ul>
+                                <li>/ip/ 请求这个接口就会返回一个可用的代理ip</li>
+                                <li>/ip/< int >/ 请求这个接口就会返回int个代理ip，返回类型是python的列表类型</li>
+                                <li>/len/ 请求这个接口就会返回当前数据库中可用代理ip的数量以及池中的ip数量，返回类型为python的元组类型</li>
+                                <li>/init/ 初始化可用代理ip， 即情况可用代理ip，建议使用其他接口前，先先执行这个接口</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                    data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                建议
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                         data-parent="#accordionExample">
+                        <div class="card-body">
+                            纵观整个项目，其实用到的技术栈很少，基本上就是我拿来练练手的项目，满打满算也就用了2天就写好了，没啥技术含量，
+                            技术大神们如果看到了，希望能够通过邮箱等联系方式向在下指明不足之处或意见，先谢过！！！
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+</body>
+
+</html>

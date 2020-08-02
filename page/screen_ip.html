@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>筛选代理</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/resume.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #343A40;
+        }
+
+        .myclass img {
+            width: 100%;
+            height: 100%;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body id="page-top">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="/">
+        <span class="d-block d-lg-none">Mac Xin</span>
+        <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/static/img/tig.jpg" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/aip/">查看当前可用代理池</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/iip/">查看当前代理池</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/spiders/">向代理池添加代理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/sip/">筛选可用代理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/explain/">接口说明</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div id="ip" class="container-fluid" v-cloak>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center ">
+            当前池中可用ip代理
+            <span class="badge badge-primary badge-pill">{{ i_ip }}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            当前池中未筛选的ip代理
+            <span class="badge badge-primary badge-pill">{{ a_ip }}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            ......
+        </li>
+        <button v-on:click="screen" class="btn btn-info">筛选ip</button>
+    </ul>
+
+    <div class="myclass">
+        <img src="/static/img/sunrise.jpg" alt="">
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    new Vue({
+        el: "#ip",
+        data: {
+            i_ip: "",
+            a_ip: "",
+            message: "",
+        },
+        methods: {
+            screen: function () {
+                // 处理post请求
+                axios.post("/screen/")
+                    .then((result) => {
+                        this.message = result['data']['message'];
+                        if (this.message == 1) {
+                            alert('筛选完成！！！')
+                        } else {
+                            alert("好像出现了什么问题！！！")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        },
+        mounted() {
+            // 处理get请求
+            axios.get("/screen/")
+                .then((result) => {
+                    this.a_ip = result['data']['a_ip'];
+                    this.i_ip = result['data']['i_ip'];
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    })
+</script>
+
+</body>
+
+</html>
