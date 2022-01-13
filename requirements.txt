@@ -37,7 +37,7 @@ multidict==4.7.6
 nodeenv==1.4.0
 packaging==20.4
 parsel==1.6.0
-Pillow==7.1.2
+Pillow==9.0.0
 pluggy==0.13.1
 pre-commit==2.6.0
 Protego==0.1.16
