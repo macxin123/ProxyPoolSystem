@@ -67,7 +67,7 @@ toml==0.10.1
 tox==3.18.0
 translate==3.5.0
 translator==0.0.9
-Twisted==20.3.0
+Twisted==22.10.0
 typing-extensions==3.7.4.2
 urllib3==1.25.8
 uvicorn==0.11.7
